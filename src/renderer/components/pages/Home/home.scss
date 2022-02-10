@@ -1,0 +1,22 @@
+.home {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  .tabs {
+    width: 20%;
+    height: 100%;
+
+    .MuiTabs-flexContainer {
+
+      button {
+        width: 100%;
+        text-align: start;
+        align-items: flex-start;
+      }
+
+    }
+
+  }
+
+}
