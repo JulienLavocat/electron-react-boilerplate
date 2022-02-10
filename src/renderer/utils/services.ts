@@ -156,4 +156,22 @@ export const services: IDBWorker[] = [
     name: 'stats',
     icon: 'microchip',
   },
+  {
+    id: 'scripts/fission-ctrl',
+    category: 'Scripts',
+    name: 'fission-ctrl',
+    icon: 'microchip',
+  },
+  {
+    id: 'scripts/fission-influx',
+    category: 'Scripts',
+    name: 'fission-influx',
+    icon: 'microchip',
+  },
+  {
+    id: 'scripts/fission-prometheus',
+    category: 'Scripts',
+    name: 'fission-prometheus',
+    icon: 'microchip',
+  },
 ];

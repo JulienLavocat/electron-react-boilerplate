@@ -24,9 +24,7 @@ export const createProcess = (
 ) => {
   let process: ChildProcessWithoutNullStreams;
 
-  const type = path.split('/')[0];
-
-  switch (type) {
+  switch (path.split('/')[0]) {
     case 'gateways':
       process = spawnProcess(path, './dev.bash');
       break;
@@ -37,6 +35,10 @@ export const createProcess = (
 
     case 'web':
       process = spawnProcess(path, './dev.bash');
+      break;
+
+    case 'scripts':
+      process = spawnProcess('scripts', `./${path.split('/')[1]}.sh`);
       break;
 
     default:
