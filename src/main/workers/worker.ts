@@ -43,12 +43,15 @@ export default class Worker {
     }
 
     this.process.stdout?.on('data', (data) => {
-      const strData = data.toString();
+      const strData = data.toString() as string;
       if (strData === 'c') {
         this.logs = [];
         return;
       }
-      this.logs.push({ from: 'stdout', data: strData });
+      strData
+        .split('\n')
+        .filter((e) => Boolean(e))
+        .forEach((e) => this.logs.push({ from: 'stdout', data: e }));
     });
 
     this.process.stderr?.on('data', (data) => {
