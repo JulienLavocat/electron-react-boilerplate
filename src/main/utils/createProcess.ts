@@ -2,38 +2,42 @@ import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 
 const IDB_HOME = '/home/julien/Dev/Indiebackend';
 
+const commands: Record<string, [string, string[]]> = {
+  'docker-compose': [
+    'docker-compose',
+    [
+      '-f',
+      `'${IDB_HOME}/docker-compose.yml'`,
+      '-p',
+      "'indiebackend'",
+      'logs',
+      '-f',
+      '--tail',
+      '100',
+    ],
+  ],
+};
+
 export const createProcess = (
   path: string,
   onData: (data: any, stream: string) => void
 ) => {
   let process: ChildProcessWithoutNullStreams;
 
-  switch (path) {
-    case 'docker-compose':
-      process = spawn(
-        'docker-compose',
-        [
-          '-f',
-          `'${IDB_HOME}/docker-compose.yml'`,
-          '-p',
-          "'indiebackend'",
-          'logs',
-          '-f',
-          '--tail',
-          '100',
-        ],
-        {
-          cwd: `${IDB_HOME}`,
-          shell: true,
-        }
-      );
+  const type = path.split('/')[0];
+
+  switch (type) {
+    case 'gateways':
+      process = spawnProcess(path, './dev.bash');
+      break;
+
+    case 'services':
+      process = spawnProcess(path, './dev.bash');
       break;
 
     default:
-      process = spawn('./dev.bash', {
-        cwd: `${IDB_HOME}/${path}`,
-        shell: true,
-      });
+      const [cmd, args] = commands[path];
+      process = spawnProcess('', cmd, args);
       break;
   }
 
@@ -42,3 +46,10 @@ export const createProcess = (
 
   return process;
 };
+
+function spawnProcess(path: string, cmd: string, args?: string[]) {
+  return spawn(cmd, args, {
+    cwd: `${IDB_HOME}/${path}`,
+    shell: true,
+  });
+}

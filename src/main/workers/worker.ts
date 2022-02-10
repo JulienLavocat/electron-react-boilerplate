@@ -1,4 +1,4 @@
-import { ChildProcess, spawn } from 'child_process';
+import { ChildProcess } from 'child_process';
 import treeKill from 'tree-kill';
 import { createProcess } from '../utils/createProcess';
 

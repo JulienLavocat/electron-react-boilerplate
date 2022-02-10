@@ -33,6 +33,7 @@ export default function Worker(workerConfig: Props) {
               url={workerConfig.swaggerDoc}
               docExpansion="none"
               displayOperationId
+              // onComplete={(ui) => ui.preauthorizeApiKey('AppSecret', 'sdf')}
             />
           )}
         </div>

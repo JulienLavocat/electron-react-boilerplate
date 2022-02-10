@@ -16,24 +16,24 @@ export const services: IDBWorker[] = [
     icon: 'microchip',
   },
   {
-    id: 'gateways/customers',
-    category: 'Gateways',
-    name: 'customers',
-    icon: 'microchip',
-  },
-  {
     id: 'gateways/admins',
     category: 'Gateways',
-    name: 'admins',
+    name: 'admins-gateway',
     icon: 'microchip',
     swaggerDoc: 'http://localhost:3001/api-json',
   },
   {
     id: 'gateways/clients',
     category: 'Gateways',
-    name: 'clients',
+    name: 'clients-gateway',
     icon: 'microchip',
     swaggerDoc: 'http://localhost:3000/api-json',
+  },
+  {
+    id: 'gateways/customers',
+    category: 'Gateways',
+    name: 'customers-gateway',
+    icon: 'microchip',
   },
   { id: 'services/app', category: 'Services', name: 'app', icon: 'microchip' },
   {
@@ -64,6 +64,12 @@ export const services: IDBWorker[] = [
     id: 'services/currencies',
     category: 'Services',
     name: 'currencies',
+    icon: 'microchip',
+  },
+  {
+    id: 'services/customers',
+    category: 'Services',
+    name: 'customers',
     icon: 'microchip',
   },
   {
@@ -136,12 +142,6 @@ export const services: IDBWorker[] = [
     id: 'services/stats',
     category: 'Services',
     name: 'stats',
-    icon: 'microchip',
-  },
-  {
-    id: 'services/customers',
-    category: 'Services',
-    name: 'customers',
     icon: 'microchip',
   },
 ];
