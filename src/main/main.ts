@@ -28,14 +28,11 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('create-worker', (_, id: string) => {
-  console.log('Creating worker', id);
-  Workers.createWorker(id);
-});
+ipcMain.on('create-worker', (_, id: string) => Workers.createWorker(id));
 
-ipcMain.on('get-worker-logs', (event, id: string) => {
-  event.reply(id, Workers.getWorker(id)?.getLogs() || ['Worker not found']);
-});
+ipcMain.on('get-worker-logs', (event, id: string) =>
+  event.reply(id, Workers.getWorker(id)?.getLogs() || ['Worker not found'])
+);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -128,9 +125,18 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('before-quit', () => Workers.killAll());
+let asyncOperationDone = false;
+app.on('before-quit', async (e) => {
+  if (!asyncOperationDone) {
+    e.preventDefault();
 
-// app.on('ready', () => Workers.init());
+    await Workers.killAll();
+
+    asyncOperationDone = true;
+    console.log('async operation done, quitting');
+    app.quit();
+  }
+});
 
 app
   .whenReady()

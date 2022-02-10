@@ -1,0 +1,69 @@
+// Color palette from https://mayccoll.github.io/Gogh/ (aci)
+
+$black: #363636;
+$red: #ff0883;
+$green: #83ff08;
+$yellow :#ff8308;
+$blue: #0883ff;
+$purple :#8308ff;
+$cyan :#08ff83;
+$white :#b6b6b6;
+$brightBlack :#424242;
+$brightRed: #ff1e8e;
+$brightGreen: #8eff1e;
+$brightYellow: #ff8e1e;
+$brightBlue: #1e8eff;
+$brightPurple: #8e1eff;
+$brightCyan: #1eff8e;
+$brightWhite: #c2c2c2;
+$foreground :#b4e1fd;
+$background: #0d1926;
+
+.console {
+  width: 100%;
+  height: 100%;
+  background-color: $background;
+
+  overflow-y: auto;
+  color: $white;
+}
+
+.ansi-black-fg {
+  color: $black;
+}
+.ansi-red-fg {
+  color: $red;
+}
+.ansi-green-fg {
+  color: $green;
+}
+.ansi-yellow-fg {
+  color: $yellow;
+}
+.ansi-blue-fg {
+  color: $blue;
+}
+.ansi-magenta-fg {
+  color: $purple;
+}
+.ansi-cyan-fg {
+  color: $cyan;
+}
+.ansi-white-fg {
+  color: $white;
+}
+.ansi-bright-black-fg {
+  color: $brightBlack;
+}
+.ansi-bright-red-fg {
+  color: $brightRed;
+}
+.ansi-bright-green-fg {
+  color: $brightGreen;
+}
+.ansi-bright-yellow-fg {
+  color: $brightYellow;
+}
+.ansi-bright-blue-fg {
+  color: $brightBlue;
+}

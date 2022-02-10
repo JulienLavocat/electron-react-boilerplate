@@ -1,6 +1,8 @@
 import Ansi from 'ansi-to-react';
 import React, { useEffect, useRef, useState } from 'react';
 
+import './worker.scss';
+
 const { ipcRenderer } = window.electron;
 
 type Props = {
@@ -26,10 +28,10 @@ export default function Worker({ id }: Props) {
   }, []);
 
   return (
-    <div>
+    <div className="console">
       {logs.map(({ data }, index) => (
         <p key={index}>
-          <Ansi>{data}</Ansi>
+          <Ansi useClasses>{data}</Ansi>
         </p>
       ))}
     </div>
