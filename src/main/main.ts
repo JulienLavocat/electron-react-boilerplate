@@ -16,6 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import Workers from './workers';
 
 export default class AppUpdater {
   constructor() {
@@ -27,10 +28,13 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+ipcMain.on('create-worker', (_, id: string) => {
+  console.log('Creating worker', id);
+  Workers.createWorker(id);
+});
+
+ipcMain.on('get-worker-logs', (event, id: string) => {
+  event.reply(id, Workers.getWorker(id)?.getLogs() || ['Worker not found']);
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -123,6 +127,10 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+app.on('before-quit', () => Workers.killAll());
+
+// app.on('ready', () => Workers.init());
 
 app
   .whenReady()
