@@ -40,6 +40,11 @@ ipcMain.on('open-in-code', (_, id: string) => {
   exec(`code ${idb_home}/${id}`);
 });
 
+ipcMain.on('restart-worker', (_, id: string) => {
+  console.log('restarting wroker');
+  Workers.getWorker(id)?.restart();
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

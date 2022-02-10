@@ -4,13 +4,16 @@ import treeKill from 'tree-kill';
 const IDB_HOME = '/home/julien/Dev/Indiebackend';
 
 export default class Worker {
-  private process: ChildProcess;
+  private process!: ChildProcess;
   private logs: { from: string; data: string }[];
 
   constructor(private path: string) {
     this.logs = [];
+    this.run();
+  }
 
-    switch (path) {
+  run() {
+    switch (this.path) {
       case 'docker-compose':
         this.process = spawn(
           'docker-compose',
@@ -33,7 +36,7 @@ export default class Worker {
 
       default:
         this.process = spawn('./dev.bash', {
-          cwd: `${IDB_HOME}/${path}`,
+          cwd: `${IDB_HOME}/${this.path}`,
           shell: true,
         });
         break;
@@ -55,6 +58,14 @@ export default class Worker {
 
   getLogs() {
     return this.logs;
+  }
+
+  async restart() {
+    console.log('Got restart request');
+    this.logs = [{ from: 'process-manager', data: 'Killing worker...' }];
+    await this.kill();
+    this.logs = [{ from: 'process-manager', data: 'Starting worker...' }];
+    this.run();
   }
 
   async kill() {

@@ -21,6 +21,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
     openInCode(id) {
       ipcRenderer.send('open-in-code', id)
+    },
+    restart(id) {
+      ipcRenderer.send('restart-worker', id)
     }
   },
 });

@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 
 const { ipcRenderer } = window.electron;
 
-const useWorker = (id: string) => {
+export interface UseWorker {
+  logs: { from: string; data: string }[];
+  openInCode: () => void;
+  restart: () => void;
+}
+
+const useWorker = (id: string): UseWorker => {
   const [logs, setLogs] = useState<{ from: string; data: string }[]>([]);
   const ref = useRef<NodeJS.Timer | null>(null);
 
@@ -22,7 +28,11 @@ const useWorker = (id: string) => {
     };
   }, []);
 
-  return { logs, openInCode: () => ipcRenderer.openInCode(id) };
+  return {
+    logs,
+    openInCode: () => ipcRenderer.openInCode(id),
+    restart: () => ipcRenderer.restart(id),
+  };
 };
 
 export default useWorker;

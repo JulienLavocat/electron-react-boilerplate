@@ -1,39 +1,26 @@
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  IconButton,
-  Paper,
-} from '@mui/material';
-import { Edit } from '@mui/icons-material';
 import Ansi from 'ansi-to-react';
-import React from 'react';
+import React, { createContext } from 'react';
 import ScrollableFeed from 'react-scrollable-feed';
-import useWorker from '../../../hooks/useWorker';
+import useWorker, { UseWorker } from '../../../hooks/useWorker';
+import Actions from './Actions';
+import Console from './Console';
 import './worker.scss';
 
 type Props = {
   id: string;
 };
 
+export const CurrentWorkerCtx = createContext<UseWorker>({} as UseWorker);
+
 export default function Worker({ id }: Props) {
-  const { logs, openInCode } = useWorker(id);
+  const worker = useWorker(id);
 
   return (
-    <div className="worker">
-      <Paper className="actions">
-        <IconButton onClick={() => openInCode()}>
-          <Edit />
-        </IconButton>
-      </Paper>
-      <div className="console">
-        <ScrollableFeed className="feed">
-          {logs.map(({ data }, index) => (
-            <p key={index}>
-              <Ansi useClasses>{data}</Ansi>
-            </p>
-          ))}
-        </ScrollableFeed>
+    <CurrentWorkerCtx.Provider value={worker}>
+      <div className="worker">
+        <Actions />
+        <Console />
       </div>
-    </div>
+    </CurrentWorkerCtx.Provider>
   );
 }

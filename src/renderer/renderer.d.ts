@@ -7,6 +7,7 @@ export interface IPCRenderer {
   unsubscribeFromWorker: (id: string) => void;
   getLogs: (id: string) => void;
   openInCode: (id: string) => void;
+  restart: (id: string) => void;
 }
 
 declare global {
