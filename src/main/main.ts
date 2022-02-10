@@ -133,7 +133,7 @@ app.on('before-quit', async (e) => {
     await Workers.killAll();
 
     asyncOperationDone = true;
-    console.log('async operation done, quitting');
+    console.log('Killed all workers, exiting');
     app.quit();
   }
 });

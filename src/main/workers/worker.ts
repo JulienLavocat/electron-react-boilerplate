@@ -1,18 +1,39 @@
 import { ChildProcess, spawn } from 'child_process';
 import treeKill from 'tree-kill';
 
-const IDB_HOME = '/home/julien/Dev/Indiebackend/';
+const IDB_HOME = '/home/julien/Dev/Indiebackend';
 
 export default class Worker {
   private process: ChildProcess;
   private logs: { from: string; data: string }[];
 
-  constructor(private path: string) {
+  constructor(private path: string, isDockerCompose = false) {
     this.logs = [];
-    this.process = spawn('./dev.bash', {
-      cwd: `${IDB_HOME}/${path}`,
-      shell: true,
-    });
+
+    if (isDockerCompose) {
+      this.process = spawn(
+        'docker-compose',
+        [
+          '-f',
+          `'${IDB_HOME}/docker-compose.yml'`,
+          '-p',
+          "'indiebackend'",
+          'logs',
+          '-f',
+          '--tail',
+          '100',
+        ],
+        {
+          cwd: `${IDB_HOME}`,
+          shell: true,
+        }
+      );
+    } else {
+      this.process = spawn('./dev.bash', {
+        cwd: `${IDB_HOME}/${path}`,
+        shell: true,
+      });
+    }
 
     this.process.stdout?.on('data', (data) => {
       const strData = data.toString();

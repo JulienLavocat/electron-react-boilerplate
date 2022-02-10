@@ -1,22 +1,41 @@
-import { createStyles, Divider, Tab, Tabs } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { services } from '../../../utils/services';
 import Worker from '../../modules/Worker';
 import './home.scss';
 
-const ID = 'gateways/customers';
+const tabsLabels = [
+  'docker-compose',
+  ...Object.values(services.gateways).map((e) => e + '-gateway'),
+  ...Object.values(services.services).flat(),
+];
+
+const tabsItems = [
+  'docker-compose',
+  ...Object.values(services.gateways).map((e) => `gateways/${e}`),
+  ...Object.values(services.services)
+    .flat()
+    .map((e) => `services/${e}`),
+];
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
 
-  const getTabLabels = () =>
-    Object.entries(services).map(([type, items]) =>
-      items.map((item) => (
-        <Tab label={type === 'gateways' ? `${item}-gateway` : item} sx={{}} />
-      ))
-    );
+  const buildTabLabels = () =>
+    tabsLabels.map((item, index) => <Tab label={item} value={index} />);
 
-  const tabLabels = useMemo(() => getTabLabels(), []);
+  const buildTabs = () => {
+    return tabsItems.map((item, index) => (
+      <div
+        hidden={currentTab !== index}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <Worker id={item} />
+      </div>
+    ));
+  };
+  const tabLabels = useMemo(() => buildTabLabels(), [buildTabLabels]);
+  const tabsContent = useMemo(() => buildTabs(), [currentTab]);
 
   return (
     <div className="home">
@@ -33,7 +52,7 @@ export default function Home() {
       >
         {...tabLabels}
       </Tabs>
-      <Worker id={ID} />
+      {...tabsContent}
     </div>
   );
 }
