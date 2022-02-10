@@ -22,6 +22,8 @@ export default class Workers {
   }
 
   static async killAll() {
-    for (const worker of this.workers.values()) await worker.kill();
+    const promises = [];
+    for (const worker of this.workers.values()) promises.push(worker.kill());
+    await Promise.all(promises);
   }
 }
