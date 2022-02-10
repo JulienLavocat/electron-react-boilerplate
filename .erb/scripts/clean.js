@@ -7,6 +7,7 @@ const commandMap = {
   dist: webpackPaths.distPath,
   release: webpackPaths.releasePath,
   dll: webpackPaths.dllPath,
+  build: webpackPaths.buildPath
 };
 
 args.forEach((x) => {
