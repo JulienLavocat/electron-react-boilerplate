@@ -33,7 +33,6 @@ export default function Home() {
       >
         {...tabLabels}
       </Tabs>
-      <Divider orientation="vertical" />
       <Worker id={ID} />
     </div>
   );
