@@ -1,7 +1,6 @@
 import { ChildProcess, spawn } from 'child_process';
 import treeKill from 'tree-kill';
-
-const IDB_HOME = '/home/julien/Dev/Indiebackend';
+import { createProcess } from '../utils/createProcess';
 
 export default class Worker {
   private process!: ChildProcess;
@@ -13,36 +12,7 @@ export default class Worker {
   }
 
   run() {
-    switch (this.path) {
-      case 'docker-compose':
-        this.process = spawn(
-          'docker-compose',
-          [
-            '-f',
-            `'${IDB_HOME}/docker-compose.yml'`,
-            '-p',
-            "'indiebackend'",
-            'logs',
-            '-f',
-            '--tail',
-            '100',
-          ],
-          {
-            cwd: `${IDB_HOME}`,
-            shell: true,
-          }
-        );
-        break;
-
-      default:
-        this.process = spawn('./dev.bash', {
-          cwd: `${IDB_HOME}/${this.path}`,
-          shell: true,
-        });
-        break;
-    }
-
-    this.process.stdout?.on('data', (data) => {
+    this.process = createProcess(this.path, (data, stream) => {
       const strData = data.toString() as string;
       if (strData === 'c') {
         this.logs = [];
@@ -51,11 +21,7 @@ export default class Worker {
       strData
         .split('\n')
         .filter((e) => Boolean(e))
-        .forEach((e) => this.logs.push({ from: 'stdout', data: e }));
-    });
-
-    this.process.stderr?.on('data', (data) => {
-      this.logs.push({ from: 'stderr', data: data.toString() });
+        .forEach((e) => this.logs.push({ from: stream, data: e }));
     });
   }
 
