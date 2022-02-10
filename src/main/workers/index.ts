@@ -17,7 +17,7 @@ export default class Workers {
   static async createWorker(path: string) {
     if (this.workers.has(path)) return this.getWorker(path);
     console.log('Creating worker', path);
-    this.workers.set(path, new Worker(path, path === 'docker-compose'));
+    this.workers.set(path, new Worker(path));
     return this.getWorker(path);
   }
 

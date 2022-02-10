@@ -7,32 +7,36 @@ export default class Worker {
   private process: ChildProcess;
   private logs: { from: string; data: string }[];
 
-  constructor(private path: string, isDockerCompose = false) {
+  constructor(private path: string) {
     this.logs = [];
 
-    if (isDockerCompose) {
-      this.process = spawn(
-        'docker-compose',
-        [
-          '-f',
-          `'${IDB_HOME}/docker-compose.yml'`,
-          '-p',
-          "'indiebackend'",
-          'logs',
-          '-f',
-          '--tail',
-          '100',
-        ],
-        {
-          cwd: `${IDB_HOME}`,
+    switch (path) {
+      case 'docker-compose':
+        this.process = spawn(
+          'docker-compose',
+          [
+            '-f',
+            `'${IDB_HOME}/docker-compose.yml'`,
+            '-p',
+            "'indiebackend'",
+            'logs',
+            '-f',
+            '--tail',
+            '100',
+          ],
+          {
+            cwd: `${IDB_HOME}`,
+            shell: true,
+          }
+        );
+        break;
+
+      default:
+        this.process = spawn('./dev.bash', {
+          cwd: `${IDB_HOME}/${path}`,
           shell: true,
-        }
-      );
-    } else {
-      this.process = spawn('./dev.bash', {
-        cwd: `${IDB_HOME}/${path}`,
-        shell: true,
-      });
+        });
+        break;
     }
 
     this.process.stdout?.on('data', (data) => {
