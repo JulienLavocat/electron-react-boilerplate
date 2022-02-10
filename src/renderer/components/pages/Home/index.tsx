@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tab, Tabs } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { services } from '../../../utils/services';
@@ -8,7 +9,13 @@ export default function Home() {
   const [currentTab, setCurrentTab] = useState(0);
 
   const buildTabLabels = () =>
-    services.map(({ name }, index) => <Tab label={name} value={index} />);
+    services.map(({ name, icon }, index) => (
+      <Tab
+        label={name}
+        value={index}
+        // icon={icon && <FontAwesomeIcon icon={icon} />}
+      />
+    ));
 
   const buildTabs = () => {
     return services.map((worker, index) => (

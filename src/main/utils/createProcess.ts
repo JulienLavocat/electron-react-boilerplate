@@ -35,6 +35,10 @@ export const createProcess = (
       process = spawnProcess(path, './dev.bash');
       break;
 
+    case 'web':
+      process = spawnProcess(path, './dev.bash');
+      break;
+
     default:
       const [cmd, args] = commands[path];
       process = spawnProcess('', cmd, args);

@@ -144,4 +144,10 @@ export const services: IDBWorker[] = [
     name: 'stats',
     icon: 'microchip',
   },
+  {
+    id: 'web/dashboard',
+    category: 'Web',
+    name: 'dashboard',
+    icon: 'microchip',
+  },
 ];
