@@ -29,7 +29,11 @@ export default function Worker(workerConfig: Props) {
         <div className="lower-container">
           {currentDisplay === 'console' && <Console />}
           {currentDisplay === 'swagger' && (
-            <SwaggerUI url={workerConfig.swaggerDoc} />
+            <SwaggerUI
+              url={workerConfig.swaggerDoc}
+              docExpansion="none"
+              displayOperationId
+            />
           )}
         </div>
       </div>
