@@ -39,6 +39,7 @@ export default {
    * Determine the array of extensions that should be used to resolve modules.
    */
   resolve: {
+    fallback: { stream: require.resolve('stream-browserify') },
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [webpackPaths.srcPath, 'node_modules'],
   },
@@ -46,6 +47,9 @@ export default {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: [require.resolve('buffer/'), 'Buffer'],
     }),
   ],
 };
