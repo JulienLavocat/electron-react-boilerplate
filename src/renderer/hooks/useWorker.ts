@@ -22,7 +22,7 @@ const useWorker = (id: string) => {
     };
   }, []);
 
-  return { logs };
+  return { logs, openInCode: () => ipcRenderer.openInCode(id) };
 };
 
 export default useWorker;

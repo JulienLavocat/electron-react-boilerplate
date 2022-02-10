@@ -17,6 +17,8 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import Workers from './workers';
+import { exec } from 'child_process';
+import { idb_home } from './config.json';
 
 export default class AppUpdater {
   constructor() {
@@ -33,6 +35,10 @@ ipcMain.on('create-worker', (_, id: string) => Workers.createWorker(id));
 ipcMain.on('get-worker-logs', (event, id: string) =>
   event.reply(id, Workers.getWorker(id)?.getLogs() || ['Worker not found'])
 );
+
+ipcMain.on('open-in-code', (_, id: string) => {
+  exec(`code ${idb_home}/${id}`);
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

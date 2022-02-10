@@ -18,6 +18,9 @@ contextBridge.exposeInMainWorld('electron', {
     },
     getLogs(id) {
       ipcRenderer.send('get-worker-logs', id)
+    },
+    openInCode(id) {
+      ipcRenderer.send('open-in-code', id)
     }
   },
 });
