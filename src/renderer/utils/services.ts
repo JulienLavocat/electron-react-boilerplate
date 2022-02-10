@@ -35,6 +35,12 @@ export const services: IDBWorker[] = [
     name: 'customers-gateway',
     icon: 'microchip',
   },
+  {
+    id: 'web/dashboard',
+    category: 'Web',
+    name: 'dashboard',
+    icon: 'microchip',
+  },
   { id: 'services/app', category: 'Services', name: 'app', icon: 'microchip' },
   {
     id: 'services/app-stats',
@@ -127,6 +133,12 @@ export const services: IDBWorker[] = [
     icon: 'microchip',
   },
   {
+    id: 'services/rules',
+    category: 'Services',
+    name: 'rules',
+    icon: 'microchip',
+  },
+  {
     id: 'services/profiles',
     category: 'Services',
     name: 'profiles',
@@ -142,12 +154,6 @@ export const services: IDBWorker[] = [
     id: 'services/stats',
     category: 'Services',
     name: 'stats',
-    icon: 'microchip',
-  },
-  {
-    id: 'web/dashboard',
-    category: 'Web',
-    name: 'dashboard',
     icon: 'microchip',
   },
 ];
