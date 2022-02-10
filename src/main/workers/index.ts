@@ -1,30 +1,4 @@
-import { ipcMain, ipcRenderer } from 'electron';
 import Worker from './worker';
-
-const services = {
-  gateways: ['customers', 'admins', 'clients'],
-  services: [
-    'app',
-    'app-stats',
-    'auth',
-    'billing',
-    'configs',
-    'currencies',
-    'customers',
-    'emails',
-    'events-manager',
-    'functions',
-    'groups',
-    'leaderboards',
-    'messaging',
-    'notifications',
-    'payments',
-    'players',
-    'profiles',
-    'shops',
-    'stats',
-  ],
-};
 
 export default class Workers {
   static workers = new Map<string, Worker>();
