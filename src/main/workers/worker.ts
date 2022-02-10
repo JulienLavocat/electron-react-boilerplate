@@ -47,8 +47,5 @@ export default class Worker {
           resolve();
         });
     });
-
-    // this.process.kill();
-    // if (this.process.pid) process.kill(this.process.pid, 'SIGINT');
   }
 }
